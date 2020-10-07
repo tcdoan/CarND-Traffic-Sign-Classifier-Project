@@ -2,8 +2,6 @@
 
 ## Thanh Doan Writeup
 
----
-
 **Build a Traffic Sign Recognition Project**
 
 The steps of this project are the following:
@@ -16,22 +14,21 @@ The steps of this project are the following:
 * Summarize the results with this written report
 
 
----
 ## Writeup / submission
 
 
 This writeup, README.md, addressed all [rubric points](https://review.udacity.com/#!/rubrics/481/view) and serves as the project report for submission. The submission includes [Traffic_Sign_Classifier.ipynb](https://github.com/tcdoan/CarND-Traffic-Sign-Classifier-Project/blob/master/Traffic_Sign_Classifier.ipynb) (project code), this README.md file and [new German traffic sign test images](https://github.com/tcdoan/CarND-Traffic-Sign-Classifier-Project/tree/master/newImages) found on the internet. 
 
 
-Steps to run *Traffic_Sign_Classifier.ipynb* in your local environment are:
+To replicate the work, just do few simple steps below:
 - Clone this repo into your local computer
 - Download https://s3-us-west-1.amazonaws.com/udacity-selfdrivingcar/traffic-signs-data.zip
 - Unzip *traffic-signs-data.zip* and leave *train.p, valid.p, test.p* files in the same directory that house *Traffic_Sign_Classifier.ipynb* notebook
 - Create and activate conda environment [car2](https://github.com/tcdoan/CarND-Traffic-Sign-Classifier-Project/blob/master/car2.yml) - this will install all dependency packages such as tensorflow v1.3.0 and opencv v3.4.2.16
     -  conda env create -f car2.yml
     -  activate source car2
-- Launch jupyter notebook
-
+- Launch [Traffic_Sign_Classifier.ipynb](https://github.com/tcdoan/CarND-Traffic-Sign-Classifier-Project/blob/master/Traffic_Sign_Classifier.ipynb)  jupyter notebook
+- Run all cells inside the notebook
 
 ## Data Set Summary & Exploration
 
@@ -152,7 +149,7 @@ Next **model-2** is derived from model-1 by adding more filters to the 2 convolu
 
 ![Model-2 architecture](modelArchitecture.PNG)
 
-I trained **model-2** using 91,646 augmented images for 30 epochs. The training accuracy is 100%. The validation accuracy is 97.9% and test accuracy is 96.69%. The learning curves as the results of training **model-2** using augmented data is below. 
+I trained **model-2** using 91,646 augmented images for 30 epochs. The training accuracy is 100%. The validation accuracy is 97.9% and test accuracy is 96.6%. The learning curves as the results of training **model-2** using augmented data is below. 
 
 ![Model-2 learning curve](m2curve.png)
 
@@ -163,31 +160,30 @@ loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits, labels=one
 training = tf.train.AdamOptimizer(learning_ratee).minimize(loss)
 ```
 
-The loss function is 
-    $ loss = \frac{1} {2}  $
+The loss function is computed by averaging cross entropy values for a batch size of `m` training examples. 
 
-the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
-
-![Model-2 learning curve](m2train.png)
+![Model-2 learning curve](lossEq.png)
 
 
-To train the model, I used an ....
+- **K=43** is the numer of traffic sign classes.
+- **y<sup>(i)</sup>** is the one_hot_coded value of training label of **image<sup>(i)</sup>**
+- **f<sub>k</sub>** is the k<sup>th</sup> component of the softmax activation output
 
-#### 4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
+The training operation is the process of minimizing the loss function using the LOOP implemented inside `LeNet5.train(self, X_train, y_train, X_valid, y_valid, epochs, batch_size=256)` function.
 
-My final model results were:
-* training set accuracy of ?
-* validation set accuracy of ? 
-* test set accuracy of ?
+![Model training loop](m2train.png)
 
-If an iterative approach was chosen:
-* What was the first architecture that was tried and why was it chosen?
-* What were some problems with the initial architecture?
-* How was the architecture adjusted and why was it adjusted? Typical adjustments could include choosing a different model architecture, adding or taking away layers (pooling, dropout, convolution, etc), using an activation function or changing the activation function. One common justification for adjusting an architecture would be due to overfitting or underfitting. A high accuracy on the training set but low accuracy on the validation set indicates over fitting; a low accuracy on both sets indicates under fitting.
-* Which parameters were tuned? How were they adjusted and why?
-* What are some of the important design choices and why were they chosen? For example, why might a convolution layer work well with this problem? How might a dropout layer help with creating a successful model?
+I used [AdamOptimizer](https://www.tensorflow.org/api_docs/python/tf/compat/v1/train/AdamOptimizer) to train the network and experimented with different AdamOptimizer paramater values. The default values `learning_rate=0.001, beta1=0.9, beta2=0.999, epsilon=1e-08` yield desirable convergence results.
 
-If a well known architecture was chosen:
+My final model, **model-2** results were:
+* training set accuracy of 100%
+* validation set accuracy of 97.9%
+* test set accuracy of 96.6%
+
+![Model-2 precision, recal and f-mesure metrics](m2Metrics.png)
+
+As my model is based off the well-known LeNet-5 model I did not have to change the model architecture in many iterations. The only deviation from my final model is to add **dropout** regularization layers and increase  
+
 * What architecture was chosen?
 * Why did you believe it would be relevant to the traffic sign application?
 * How does the final model's accuracy on the training, validation and test set provide evidence that the model is working well?
@@ -197,12 +193,7 @@ If a well known architecture was chosen:
 
 #### 1. Choose five German traffic signs found on the web and provide them in the report. For each image, discuss what quality or qualities might be difficult to classify.
 
-Here are five German traffic signs that I found on the web:
-
-![alt text][image4] ![alt text][image5] ![alt text][image6] 
-![alt text][image7] ![alt text][image8]
-
-The first image might be difficult to classify because ...
+Here are nine German traffic signs that I found on the web:
 
 #### 2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
 
