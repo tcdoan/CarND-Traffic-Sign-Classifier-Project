@@ -159,8 +159,7 @@ training = tf.train.AdamOptimizer(learning_ratee).minimize(loss)
 
 The loss function is computed by averaging cross entropy values for a batch size of `m` training examples. 
 
-![Model-2 learning curve](lossEq.png)
-
+![Model-2 loss math](lossEq.PNG)
 
 - **K=43** is the numer of traffic sign classes.
 - **y<sup>(i)</sup>** is the one_hot_coded value of training label of **image<sup>(i)</sup>**
@@ -177,7 +176,7 @@ My final model, **model-2** results were:
 * validation set accuracy of 97.9%
 * test set accuracy of 96.6%
 
-![Model-2 precision, recal and f-mesure metrics](m2Metrics.png)
+![Model-2 precision, recal and f-mesure metrics](m2Metrics.PNG)
 
 My model architecture is based off the well-known [LeNet-5 model](http://yann.lecun.com/exdb/lenet). The reasons I chose LeNet-5 architecture as a starting point is three fold.
 
