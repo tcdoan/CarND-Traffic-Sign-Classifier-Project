@@ -106,7 +106,7 @@ X_train.shape after data augmentation  (91646, 32, 32, 3)
 
 My initial model architecture, **model-0**,  is a reimplementation of the original LeNet-5 model, described in the [Gradient-based learning applied to document recognition](https://ieeexplore.ieee.org/document/726791) paper, with modified softmax output layer to emit probabilities for 43 traffic sign classes. With no data augmentation, I trained the model using 34,799 RBG images of size (32, 32, 3). After 30 epochs of training the training accuracy is 100%. The validation accuracy is 91.6% and test accuracy is 90.6%.
 
-![learning curve showing training and validation accuracy graph](model0.PNG)
+![learning curve for model-0](model0.png)
 
 The precision, recall and f1-score classification metrics on `never-seen-before test set` for **model-0** are:
 
