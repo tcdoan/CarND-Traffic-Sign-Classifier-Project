@@ -215,11 +215,10 @@ Here are [nine German traffic signs](https://github.com/tcdoan/CarND-Traffic-Sig
 
 ![Pedictions on new test images](newImages_pred2.png)
 
-**To test the model prediction further... I collected [another set of new 9 images](https://github.com/tcdoan/CarND-Traffic-Sign-Classifier-Project/tree/master/new) below**. 
+**To test the model prediction further... I collected [another set of new 9 images](https://github.com/tcdoan/CarND-Traffic-Sign-Classifier-Project/tree/master/new2) below**. 
 **I then run predictions using the [Predictions2.ipynb](https://github.com/tcdoan/CarND-Traffic-Sign-Classifier-Project/blob/master/Predictions2.ipynb) notebook**
 
 ![New test images from internet](newImages_2.png)
-
 
 **As [Predictions2.ipynb](https://github.com/tcdoan/CarND-Traffic-Sign-Classifier-Project/blob/master/Predictions2.ipynb) notebook shown, the model still predicts 9 out 9 traffic signs correctly but softmax probabilities confirms confidence for some traffic signs are low.**
 
