@@ -15,7 +15,7 @@ The project code, [Traffic_Sign_Classifier.ipynb](https://github.com/tcdoan/CarN
 
 ## Writeup / submission
 
-This writeup, README.md, addressed [rubric points](https://review.udacity.com/#!/rubrics/481/view) and serves as the project report for submission. The submission includes [Traffic_Sign_Classifier.ipynb](https://github.com/tcdoan/CarND-Traffic-Sign-Classifier-Project/blob/master/Traffic_Sign_Classifier.ipynb), [Predictions.ipynb](https://github.com/tcdoan/CarND-Traffic-Sign-Classifier-Project/blob/master/Predictions.ipynb), this README.md file and [new german traffic sign test images](https://github.com/tcdoan/CarND-Traffic-Sign-Classifier-Project/tree/master/newImages) found on the internet.
+This writeup, README.md, addressed [rubric points](https://review.udacity.com/#!/rubrics/481/view) and serves as the project report for submission. The submission includes [Traffic_Sign_Classifier.ipynb](https://github.com/tcdoan/CarND-Traffic-Sign-Classifier-Project/blob/master/Traffic_Sign_Classifier.ipynb), [Predictions.ipynb](https://github.com/tcdoan/CarND-Traffic-Sign-Classifier-Project/blob/master/Predictions.ipynb), [Predictions2.ipynb](https://github.com/tcdoan/CarND-Traffic-Sign-Classifier-Project/blob/master/Predictions2.ipynb), this README.md file and [new german traffic sign test images](https://github.com/tcdoan/CarND-Traffic-Sign-Classifier-Project/tree/master/newImages) found on the internet.
 
 To replicate the work, just do few simple steps below:
 - Clone this repo into your local computer
@@ -211,9 +211,29 @@ Here are [nine German traffic signs](https://github.com/tcdoan/CarND-Traffic-Sig
 
 * For the first new image, the model is very sure that this is a `Slippery road` sign (probability of 1.0000). The top five soft max probabilities were 1.00, 0.00, 0.00, 0.00, 0.00.
 
-* For other new images, the model predicts correctly with high confidence from 99.98% to 100.00%. The code to print out 5 softmax probabilities for each new image is located in the 4th cell of the [Predictions.ipynb](https://github.com/tcdoan/CarND-Traffic-Sign-Classifier-Project/blob/master/Predictions.ipynb). 
+* For [8 other new images](https://github.com/tcdoan/CarND-Traffic-Sign-Classifier-Project/tree/master/newImages), the model predicts correctly with high confidence from 99.98% to 100.00%. The code to print out 5 softmax probabilities for each new image is located in the 4th cell of the [Predictions.ipynb](https://github.com/tcdoan/CarND-Traffic-Sign-Classifier-Project/blob/master/Predictions.ipynb). 
 
 ![Pedictions on new test images](newImages_pred2.png)
+
+**To test the model prediction further... I collected [another set of new 9 images](https://github.com/tcdoan/CarND-Traffic-Sign-Classifier-Project/tree/master/new) below**. 
+**I then run predictions using the [Predictions2.ipynb](https://github.com/tcdoan/CarND-Traffic-Sign-Classifier-Project/blob/master/Predictions2.ipynb) notebook**
+
+![New test images from internet](newImages_2.png)
+
+
+**As [Predictions2.ipynb](https://github.com/tcdoan/CarND-Traffic-Sign-Classifier-Project/blob/master/Predictions2.ipynb) notebook shown, the model still predicts 9 out 9 traffic signs correctly but softmax probabilities confirms confidence for some traffic signs are low.**
+
+---
+#### **Performance analysis**
+
+As the below softmax probabilities shown it is quite difficult for the model to classify 
+`image #2` and `image #5` with high confidence. 
+
+One characteristic of the new images that cause **difficult for the model to classify is the background objects**. 
+
+Both image #2 and image #5 have more background objects than 7 other new images. The  ratio between background area and trafific sign areas for these 2 images are high.
+
+![Pedictions on new test images](newImages_2_preds.png)
 
 ### (Optional) Visualizing the Neural Network
 > I choose to ignore this optional excercise for now.
