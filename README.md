@@ -4,9 +4,8 @@
 
 **Build a Traffic Sign Recognition Project**
 
-The steps of this project are the following:
+The project code, [Traffic_Sign_Classifier.ipynb](https://github.com/tcdoan/CarND-Traffic-Sign-Classifier-Project/blob/master/Traffic_Sign_Classifier.ipynb),  consists of the following steps:
 * Load the [German Traffic Sign Benchmark](http://benchmark.ini.rub.de/?section=gtsrb) data set
-
 * Explore, summarize and visualize the data set
 * Design, train and test a model architecture
 * Use the model to make predictions on new images
@@ -16,9 +15,7 @@ The steps of this project are the following:
 
 ## Writeup / submission
 
-
-This writeup, README.md, addressed all [rubric points](https://review.udacity.com/#!/rubrics/481/view) and serves as the project report for submission. The submission includes [Traffic_Sign_Classifier.ipynb](https://github.com/tcdoan/CarND-Traffic-Sign-Classifier-Project/blob/master/Traffic_Sign_Classifier.ipynb) (project code), this README.md file and [new German traffic sign test images](https://github.com/tcdoan/CarND-Traffic-Sign-Classifier-Project/tree/master/newImages) found on the internet. 
-
+This writeup, README.md, addressed [rubric points](https://review.udacity.com/#!/rubrics/481/view) and serves as the project report for submission. The submission includes [Traffic_Sign_Classifier.ipynb](https://github.com/tcdoan/CarND-Traffic-Sign-Classifier-Project/blob/master/Traffic_Sign_Classifier.ipynb), [Predictions.ipynb](https://github.com/tcdoan/CarND-Traffic-Sign-Classifier-Project/blob/master/Predictions.ipynb), this README.md file and [new german traffic sign test images](https://github.com/tcdoan/CarND-Traffic-Sign-Classifier-Project/tree/master/newImages) found on the internet.
 
 To replicate the work, just do few simple steps below:
 - Clone this repo into your local computer
@@ -107,9 +104,9 @@ X_train.shape after data augmentation  (91646, 32, 32, 3)
 
 ### **Convolutional neural network model architecture**
 
-My initial model architecture, **model-0**,  is a reimplementation of the original LeNet-5 model, the [Gradient-based learning applied to document recognition](https://ieeexplore.ieee.org/document/726791) paper, with modified softmax output layer to emit probabilities for 43 traffic sign classes. With no data augmentation, I trained the model using 34,799 RBG images of size (32, 32, 3). After 30 epochs of training the training accuracy is 100%. The validation accuracy is 91.6% and test accuracy is 90.6%.
+My initial model architecture, **model-0**,  is a reimplementation of the original LeNet-5 model, described in the [Gradient-based learning applied to document recognition](https://ieeexplore.ieee.org/document/726791) paper, with modified softmax output layer to emit probabilities for 43 traffic sign classes. With no data augmentation, I trained the model using 34,799 RBG images of size (32, 32, 3). After 30 epochs of training the training accuracy is 100%. The validation accuracy is 91.6% and test accuracy is 90.6%.
 
-![learning curve showing training and validation accuracy graph](model0.PNG)
+![learning curve for model-0](model0.png)
 
 The precision, recall and f1-score classification metrics on `never-seen-before test set` for **model-0** are:
 
@@ -162,8 +159,7 @@ training = tf.train.AdamOptimizer(learning_ratee).minimize(loss)
 
 The loss function is computed by averaging cross entropy values for a batch size of `m` training examples. 
 
-![Model-2 learning curve](lossEq.png)
-
+![Model-2 loss math](lossEq.PNG)
 
 - **K=43** is the numer of traffic sign classes.
 - **y<sup>(i)</sup>** is the one_hot_coded value of training label of **image<sup>(i)</sup>**
@@ -173,60 +169,51 @@ The training operation is the process of minimizing the loss function using the 
 
 ![Model training loop](m2train.png)
 
-I used [AdamOptimizer](https://www.tensorflow.org/api_docs/python/tf/compat/v1/train/AdamOptimizer) to train the network and experimented with different AdamOptimizer paramater values. The default values `learning_rate=0.001, beta1=0.9, beta2=0.999, epsilon=1e-08` yield desirable convergence results.
+I used [AdamOptimizer](https://www.tensorflow.org/api_docs/python/tf/compat/v1/train/AdamOptimizer) to train the network and experimented with different paramater values. The default AdamOptimizer values `learning_rate=0.001, beta1=0.9, beta2=0.999, epsilon=1e-08` yield desirable convergence results.
 
 My final model, **model-2** results were:
 * training set accuracy of 100%
 * validation set accuracy of 97.9%
 * test set accuracy of 96.6%
 
-![Model-2 precision, recal and f-mesure metrics](m2Metrics.png)
+![Model-2 precision, recal and f-mesure metrics](m2Metrics.PNG)
 
-As my model is based off the well-known LeNet-5 model I did not have to change the model architecture in many iterations. The only deviation from my final model is to add **dropout** regularization layers and increase  
+My model architecture is based off the well-known [LeNet-5 model](http://yann.lecun.com/exdb/lenet). The reasons I chose LeNet-5 architecture as a starting point is three fold.
 
-* What architecture was chosen?
-* Why did you believe it would be relevant to the traffic sign application?
-* How does the final model's accuracy on the training, validation and test set provide evidence that the model is working well?
- 
+- First, LeNet-5 is a convolutional neural network that works well for *isolated* character recognition and the model for *isolated* traffic sign recognition has similar high-level feature space.
+- Second, the given training images inside `train.p` has dimension (32, 32, 3). This dimension is similar to the data used to train the original LeNet-5 model.
 
-### Test a Model on New Images
+- Third, LeNet-5's model architecture is simple to the point that I can train the model  quickly on my desktop.
 
-#### 1. Choose five German traffic signs found on the web and provide them in the report. For each image, discuss what quality or qualities might be difficult to classify.
+From LeNet-5 model architecture I iterated a couple of changes. My final model architecture deviates from LeNet-5 architecture in:
 
-Here are nine German traffic signs that I found on the web:
+1. The number of filters for the first convolutional layer is increased from 6 to 38.
+1. The number of filters for the second convolutional layer is increased from 16 to 64.
+1. The addition of two **dropout** regularization layers. 
 
-#### 2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
+The reason I made changes #1 and #2 is to give the model more 'pattern recognition power' because recognizing traffic signs requires a more powerful neural network than the one designed for recognizing 10 hand-written digits. I made change #3 to reduce model overfitting. **Dropout** regularization helped the final model to generalize better; final validation and test accuracy rates were increased higher.
 
-Here are the results of the prediction:
+## Test a Model on New Images
 
-| Image			        |     Prediction	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| Stop Sign      		| Stop sign   									| 
-| U-turn     			| U-turn 										|
-| Yield					| Yield											|
-| 100 km/h	      		| Bumpy Road					 				|
-| Slippery Road			| Slippery Road      							|
+Here are [nine German traffic signs](https://github.com/tcdoan/CarND-Traffic-Sign-Classifier-Project/tree/master/newImages) that I found on the web:
 
+![New test images from internet](newImages.png)
 
-The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
+### Here are the results of the prediction:
 
-#### 3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
+![Model predictions on new test images](newImages_preds.png)
 
-The code for making predictions on my final model is located in the 11th cell of the Ipython notebook.
+- The model was able to *correctly predict 9 of the 9 traffic signs*, which gives an accuracy of 100%. This compares favorably to the accuracy 96.6% on the test set of 12,630 traffic sign images inside the downloaded `test.p` file.
 
-For the first image, the model is relatively sure that this is a stop sign (probability of 0.6), and the image does contain a stop sign. The top five soft max probabilities were
+- The code for making predictions on my final model is located in the 19th cell of the [Traffic_Sign_Classifier.ipynb notebook](https://github.com/tcdoan/CarND-Traffic-Sign-Classifier-Project/blob/master/Traffic_Sign_Classifier.ipynb).
 
-| Probability         	|     Prediction	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| .60         			| Stop sign   									| 
-| .20     				| U-turn 										|
-| .05					| Yield											|
-| .04	      			| Bumpy Road					 				|
-| .01				    | Slippery Road      							|
+- The code for visualizing predictions on my final model is located in the 21th cell of the [Traffic_Sign_Classifier.ipynb](https://github.com/tcdoan/CarND-Traffic-Sign-Classifier-Project/blob/master/Traffic_Sign_Classifier.ipynb).
 
+* For the first new image, the model is very sure that this is a `Slippery road` sign (probability of 1.0000). The top five soft max probabilities were 1.00, 0.00, 0.00, 0.00, 0.00.
 
-For the second image ... 
+* For other new images, the model predicts correctly with high confidence from 99.98% to 100.00%. The code to print out 5 softmax probabilities for each new image is located in the 4th cell of the [Predictions.ipynb](https://github.com/tcdoan/CarND-Traffic-Sign-Classifier-Project/blob/master/Predictions.ipynb). 
 
-### (Optional) Visualizing the Neural Network (See Step 4 of the Ipython notebook for more details)
-#### 1. Discuss the visual output of your trained network's feature maps. What characteristics did the neural network use to make classifications?
+![Pedictions on new test images](newImages_pred2.png)
 
+### (Optional) Visualizing the Neural Network
+> I choose to ignore this optional excercise for now.
